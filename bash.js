@@ -9,24 +9,26 @@ process.stdout.write('prompt > ');
 process.stdin.on('data', (data)=> {
   const cmd = data.toString().split(" ")
 
-  switch(cmd[0]){
+  switch(cmd[0].trim()){
     case "pwd":
-      pwd();
+      pwd(done);
       break;
     case "ls":
-      ls();
+      ls(done);
       break;
     case "cat":
-      cat(cmd[1].trim());
+      cat(cmd[1].trim(), done);
       break;
     case "curl":
-      curl(cmd[1].trim());
+      curl(cmd[1].trim(), done);
       break;
     default:
       console.log("error")
   }
 
-  // process.stdout.write('you typed: ' + cmd);
-  process.stdout.write('\nprompt > ');
+  function done(output){
+    process.stdout.write(output);
+    process.stderr.write('\nPrompt > ');
+  }
 })
 
